@@ -3,6 +3,7 @@ package lt.techin.springRestSR.services;
 import lombok.AllArgsConstructor;
 import lt.techin.springRestSR.dto.CourseDTO;
 import lt.techin.springRestSR.entities.Course;
+import lt.techin.springRestSR.entities.Student;
 import lt.techin.springRestSR.entities.Type;
 import lt.techin.springRestSR.exceptions.CourseNotFoundException;
 import lt.techin.springRestSR.exceptions.InvalidCourseDetailsException;
@@ -85,5 +86,16 @@ public class CourseService {
         return newCourseDTO.getStartDate().isBefore(newCourseDTO.getEndDate())
                 && newCourseDTO.getEndDate().isAfter(LocalDateTime.now())
                 && (newCourseDTO.getType().equals(Type.LIVE) || newCourseDTO.getType().equals(Type.ONLINE));
+    }
+
+    public CourseDTO getCourseById(int id) {
+        return convertToDTO(courseRepository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException("Course with specified id does not exist")));
+
+    }
+
+    public List<Student> getAllStudentsByCourseId(Integer id) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course with specified id does not exist"));
+        return course.getStudents();
     }
 }

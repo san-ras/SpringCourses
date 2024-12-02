@@ -3,10 +3,11 @@ package lt.techin.springRestSR.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
+import lt.techin.springRestSR.entities.Student;
 import lt.techin.springRestSR.entities.Type;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class CourseDTO {
@@ -23,4 +24,5 @@ public class CourseDTO {
     private LocalDateTime startDate;
     @NotNull(message = "End date cannot be null")
     private LocalDateTime endDate;
+    private List<Student> students;
 }

@@ -2,6 +2,7 @@ package lt.techin.springRestSR.controllers;
 
 import jakarta.validation.Valid;
 import lt.techin.springRestSR.dto.CourseDTO;
+import lt.techin.springRestSR.entities.Student;
 import lt.techin.springRestSR.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,11 @@ public class CoursesController {
         return courseService.getAllCourses();
     }
 
+    @GetMapping("/{id}")
+    public CourseDTO getCourseById(@PathVariable int id) {
+        return courseService.getCourseById(id);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Integer id) {
         courseService.deleteCourse(id);
@@ -41,11 +47,15 @@ public class CoursesController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO updatedCourseDTO, @PathVariable Integer id) {
-        CourseDTO bookDTO = courseService.updateCourse(updatedCourseDTO, id);
-        return new ResponseEntity<>(bookDTO, HttpStatus.OK);
+        CourseDTO courseDTO = courseService.updateCourse(updatedCourseDTO, id);
+        return new ResponseEntity<>(courseDTO, HttpStatus.OK);
     }
 
 
+    @GetMapping("/{id}/students")
+    public List<Student> getAllStudentsByCourseId(@PathVariable Integer id) {
+        return courseService.getAllStudentsByCourseId(id);
+    }
 
 
 }

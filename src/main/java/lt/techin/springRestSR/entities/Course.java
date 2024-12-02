@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,6 +24,8 @@ public class Course {
     private LocalDateTime endDate;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    @OneToMany(mappedBy = "id")
+    private List<Student> students;
 
 
     @PrePersist
